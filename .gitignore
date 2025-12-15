@@ -1,0 +1,18 @@
+# Local terraform state
+terraform.tfstate
+.terraform.tfstate
+.terraform.tfstate.*
+*.tfstate.backup
+
+# Terraform local cache
+.terraform/
+.terraform.lock.hcl
+
+# Variable files (機密情報)
+*.tfvars
+*.tfvars.json
+terraform.tfvars
+
+# IDE/Editor
+.vscode/
+.idea/
