@@ -6,7 +6,6 @@ terraform.tfstate
 
 # Terraform local cache
 .terraform/
-.terraform.lock.hcl
 
 # Variable files (機密情報)
 *.tfvars
