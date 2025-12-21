@@ -57,19 +57,25 @@ EOF
   cat <<EOF > providers.tf
 provider "aws" {
   region = "us-east-1"
+  profile = "admin"
   default_tags {
-    Terraform = "true"
-    STAGE = "${STAGE}"
-    MODUlE = "${MODULE_NAME}"
+    tags = {
+      Terraform = "true"
+      STAGE = "${STAGE}"
+      MODUlE = "${MODULE_NAME}"
+    }
   }
 }
 provider "aws" {
   alias = "ap_northeast_1"
   region = "ap-northeast-1"
+  profile = "admin"
   default_tags {
-    Terraform = "true"
-    STAGE = "${STAGE}"
-    MODUlE = "${MODULE_NAME}"
+    tags = {
+      Terraform = "true"
+      STAGE = "${STAGE}"
+      MODUlE = "${MODULE_NAME}"
+    }
   }
 }
 EOF
