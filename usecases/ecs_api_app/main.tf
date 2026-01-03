@@ -39,7 +39,7 @@ data "aws_iam_policy_document" "ecs_task_execution" {
       "ssm:GetParameters",
       "ssm:Getparameter",
     ]
-    resource = [
+    resources = [
       data.aws_ssm_parameter.flask_api_correct_answer.arn
     ]
   }
@@ -52,7 +52,7 @@ resource "aws_iam_role" "ecs_task_execution_role" {
 
 resource "aws_iam_role_policy_attachments_exclusive" "ecs_task_execution_managed_policy" {
   policy_arns = [data.aws_iam_policy.managed_ecs_task_execution.arn]
-  role_name = aws_iam_role.ecs_task_execution_role.role_name
+  role_name = aws_iam_role.ecs_task_execution_role.name
 }
 
 resource "aws_iam_role_policy" "ecs_task_execution_inline_policy" {
@@ -121,7 +121,7 @@ data "aws_subnets" "public" {
   }
 }
 
-data "aws_security_group" "alb" {
+resource "aws_security_group" "alb" {
   name = "${var.stage}-flask_api_alb_tf"
   vpc_id = data.aws_vpc.this.id
 }
@@ -156,7 +156,7 @@ resource "aws_vpc_security_group_egress_rule" "ecs_instance_to_https" {
 }
 
 resource "aws_lb" "flask_api" {
-  name = "${var.satge}-flask-api-alb-tf"
+  name = "${var.stage}-flask-api-alb-tf"
   internal = false
   load_balancer_type = "application"
   security_groups = [aws_security_group.alb.id]
@@ -194,7 +194,7 @@ data "aws_ecr_repository" "flask_api" {
   name = "${var.stage}-flask-api-tf"
 }
 
-resource "aws_clowdwatch_log_group" "flask_api" {
+resource "aws_cloudwatch_log_group" "flask_api" {
   name = "/ecs/${var.stage}-flask-api-tf"
   retention_in_days = 90
 }
@@ -215,7 +215,7 @@ locals {
         logDriver = "awslogs"
         options = {
           awslogs-group = aws_cloudwatch_log_group.flask_api.name
-          awslogs-region = data.aws_region.current.name
+          awslogs-region = data.aws_region.current.region
           awslogs-stream-prefix = "flask_api"
         }
       }
@@ -263,7 +263,7 @@ resource "aws_ecs_service" "flask_api" {
   load_balancer {
     container_name = local.container_definitions.flask_api.name
     container_port = 5000
-    target_group_arn = aws_lb_target_group.flask_api
+    target_group_arn = aws_lb_target_group.flask_api.arn
   }
 
   network_configuration {
