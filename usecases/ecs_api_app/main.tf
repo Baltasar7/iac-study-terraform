@@ -219,7 +219,7 @@ locals {
           awslogs-stream-prefix = "flask_api"
         }
       }
-      portMapping = [
+      portMappings = [
         {
           containerPort = 5000
           hostPort = 5000
@@ -250,7 +250,7 @@ resource "aws_ecs_service" "flask_api" {
   cluster = aws_ecs_cluster.flask_api.arn
   desired_count = 0
   enable_execute_command = true
-  health_check_grace_period_seconds = 60
+  health_check_grace_period_seconds = 300
   launch_type = "FARGATE"
   name = "flask-api-tf"
   task_definition = aws_ecs_task_definition.flask_api.arn
