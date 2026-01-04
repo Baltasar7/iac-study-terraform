@@ -219,7 +219,7 @@ locals {
       ]
       essential = true
       image = "${data.aws_ecr_repository.flask_api.repository_url}:latest"
-      logConfigration = {
+      logConfiguration = {
         logDriver = "awslogs"
         options = {
           awslogs-group = aws_cloudwatch_log_group.flask_api.name
