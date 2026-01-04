@@ -147,6 +147,14 @@ resource "aws_vpc_security_group_egress_rule" "lb_to_ecs_instance" {
   referenced_security_group_id = aws_security_group.ecs_instance.id
 }
 
+resource "aws_vpc_security_group_ingress_rule" "ecs_instance_from_lb" {
+  ip_protocol = "tcp"
+  security_group_id = aws_security_group.ecs_instance.id
+  from_port = 5000
+  to_port = 5000
+  referenced_security_group_id = aws_security_group.alb.id
+}
+
 resource "aws_vpc_security_group_egress_rule" "ecs_instance_to_https" {
   ip_protocol = "tcp"
   security_group_id = aws_security_group.ecs_instance.id
