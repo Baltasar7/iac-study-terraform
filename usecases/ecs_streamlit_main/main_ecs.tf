@@ -13,6 +13,7 @@ resource "aws_ecs_task_definition" "streamlit" {
   container_definitions = jsonencode(
     values(local.container_definitions)
   )
+  track_latest = true
   cpu = "256"
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
   family = "${var.stage}-streamlit-${var.iactool}"

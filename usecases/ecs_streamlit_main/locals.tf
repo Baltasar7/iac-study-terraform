@@ -29,7 +29,8 @@ locals {
         },
       ]
       essential = true
-      image = "${data.aws_ecr_repository.ecs_streamlit.repository_url}:v1.0.0"
+      
+      image = data.aws_ecr_image.latest.image_uri
       logConfiguration = {
         logDriver = "awslogs"
         options = {

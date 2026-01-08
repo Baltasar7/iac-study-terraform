@@ -115,3 +115,7 @@ data "aws_ssm_parameter" "starter_pinecone_api_key" {
 data "aws_ecr_repository" "ecs_streamlit" {
   name = "${var.stage}-streamlit-${var.iactool}"
 }
+data "aws_ecr_image" "latest" {
+  repository_name = data.aws_ecr_repository.ecs_streamlit.name
+  most_recent = true
+}
