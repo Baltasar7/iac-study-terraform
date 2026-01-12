@@ -1,0 +1,22 @@
+# セキュリティ
+.env
+.env.*
+*.pem
+*.key
+secrets/
+config/database.yml
+.claude.json
+.claude.json.*
+.credentials.toml
+.ssh/
+.config/
+.aws/
+.cdk.context.json
+
+# トークン節約
+node_modules/
+dist/
+build/
+.git/
+.chach/
+.venv/

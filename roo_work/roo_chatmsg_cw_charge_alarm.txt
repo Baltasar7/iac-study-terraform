@@ -1,0 +1,39 @@
+# 事前準備
+.rooignoreをホームディレクトリに配置して、.envファイルをroo codeが見つけられないことを確認する。
+また、無理やり.envファイルを探させて、.rooignoreに記述されているので読み込めないとの回答を確認する。
+
+# Roo Codeへの依頼方法
+以下の依頼をRoo codeにそのまま渡すと、gemini-2.5-flashはタスクが複雑すぎるとのことでエラーとなる。
+よって、以下の通りタスクを分割して、個別でメッセージをRoo codeに渡す。
+  1. 事前作成した編集対象のterraformテンプレートコードの絶対パス2つを渡して把握してもらう (絶対パスに要修正)
+  2. 1のファイルの編集方法として参考としてほしいファイルの絶対パス2つを渡して把握してもらう (絶対パスに要修正)
+  3. terraformで作成して欲しい AWS Cloud Watch Alarm の条件を渡して把握してもらう (メールアドレス要修正)
+  4. 1で把握したterrafomrテンプレートファイルをベースにして、3で把握した条件の Cloud Watch Alarm を2で把握した編集方法で作成してもらう
+
+# 注意点
+上記4の依頼後、Roo codeはファイル読み書きの度に承認を求めてくる。
+その途中、Google AI Studioで発行したAPIキーの日単位無料枠をgemini-2.5-flashが使い果たしてしまう。
+その場合は別途用意したOpenRouterのAPIキーを利用するようRoo codeの設定を変更する。
+なお、タスクの履歴はVSCode上のチャット履歴 (タスク) にて管理されているので、途中でAPIを切り替えてもタスクを継続可能。
+(Roo codeの設定を見直すことで、Google AI Studioの日単位無料枠でも賄える可能性あり)
+
+# 依頼内容
+terraform を用いて、AWSの料金超過を検知する CloudWatch Alarm を設定したい。
+
+## Cloud Watch Alarm の条件
+  - 月初からの利用料金が 5ドル/10ドル/20ドル/30ドル/50ドル/100ドル をそれぞれ超過したタイミングで、所定のメールアドレスに通知を送る
+  - メールアドレス: "example@gmail.com"
+  - 対象リージョン: us-east-1 & ap-northeast-1
+  - このアラームの仕組みは、可能な限り無料に近い構成で構築する
+
+## 親モジュールのパス (ファイル編集を許可)
+~/develop/awsiac/terraform/env/dev/cw_charge_alarm/
+
+## 子モジュールのパス (ファイル編集を許可)
+~/develop/awsiac/terraform/usecases/cw_charge_alarm/
+
+## 親モジュールのファイル構成参考用のパス
+~/develop/awsiac/terraform/env/dev/ecs_streamlit_infra
+
+## 子モジュールのファイル構成参考用のパス
+~/develop/awsiac/terraform/usecases/ecs_streamlit_infra
