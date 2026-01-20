@@ -4,8 +4,7 @@ provider "aws" {
   default_tags {
     tags = {
       Terraform = "true"
-      STAGE = "dev"
-      MODUlE = "cw_charge_alarm"
+      MODULE = "cw_charge_alarm"
     }
   }
 }
@@ -16,8 +15,7 @@ provider "aws" {
   default_tags {
     tags = {
       Terraform = "true"
-      STAGE = "dev"
-      MODUlE = "cw_charge_alarm"
+      MODULE = "cw_charge_alarm"
     }
   }
 }
