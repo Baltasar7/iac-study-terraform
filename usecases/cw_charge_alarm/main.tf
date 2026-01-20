@@ -2,7 +2,7 @@ resource "aws_ssm_parameter" "cw_billing_alarms_sns_email_address" {
   name = "/cw_billing_alarms/sns_email_address"
   description = "CloudWatchアラーム通知の送信先メールアドレス。"
   type = "SecureString"
-  value = "uninitialized@example.com"
+  value = "uninitialized@example.com"  # このアドレスへのサブスクリプションは、ParameterStoreのemailaddressを手動修正後も"保留中の確認"で残り続けるが、3日後に自動削除される
   lifecycle {
     ignore_changes = [
       value
