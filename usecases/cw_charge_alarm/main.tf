@@ -31,7 +31,7 @@ resource "aws_cloudwatch_metric_alarm" "billing_alarms" {
   statistic           = "Maximum"
   threshold           = each.key
   alarm_description   = "AWSの推定料金が${each.key}USDを超過した場合にアラームを発報"
-  treat_missing_data  = "notBreaching"  # データ不足は正常扱い
+  treat_missing_data  = "ignore"  # データ不足は無視（Alarm維持）。"notBreaching"の場合、データ不足時にOK遷移を通知してしまう
 
   dimensions = {
     Currency = "USD"
