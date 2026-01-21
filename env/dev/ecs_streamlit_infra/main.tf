@@ -4,4 +4,5 @@ module "ecs_streamlit_infra" {
   iactool = "tf"
   vpc_cidr = "10.0.0.0/16"
   enable_nat_gateway = false
+  domain_name = "streamlit.example.com"
 }

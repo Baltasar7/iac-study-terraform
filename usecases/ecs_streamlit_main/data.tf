@@ -119,3 +119,9 @@ data "aws_ecr_image" "latest" {
   repository_name = data.aws_ecr_repository.ecs_streamlit.name
   most_recent = true
 }
+
+data "aws_acm_certificate" "streamlit" {
+  domain   = "streamlit.example.com" # ここは本来変数にすべきですが、既存のパターンに合わせます
+  statuses = ["ISSUED", "PENDING_VALIDATION"]
+  most_recent = true
+}

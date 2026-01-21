@@ -19,3 +19,7 @@ variable "one_nat_gateway_per_az" {
   default = false
   description = "AZごとに1つのNAT Gatewayを設置するか。"
 }
+variable "domain_name" {
+  type = string
+  description = "ALBで使用するドメイン名。"
+}
