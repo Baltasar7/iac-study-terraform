@@ -16,6 +16,14 @@ resource "aws_vpc_security_group_ingress_rule" "lb_from_http" {
   cidr_ipv4 = "0.0.0.0/0"
 }
 
+resource "aws_vpc_security_group_ingress_rule" "lb_from_https" {
+  ip_protocol = "tcp"
+  security_group_id = aws_security_group.alb.id
+  from_port = 443
+  to_port = 443
+  cidr_ipv4 = "0.0.0.0/0"
+}
+
 resource "aws_vpc_security_group_egress_rule" "lb_to_ecs_instance" {
   ip_protocol = "tcp"
   security_group_id = aws_security_group.alb.id

@@ -25,13 +25,30 @@ resource "aws_lb_target_group" "ecs_streamlit" {
   }
 }
 
-resource "aws_lb_listener" "flask_api" {
+resource "aws_lb_listener" "http_redirect" {
   load_balancer_arn = aws_lb.ecs_streamlit.arn
   port = 80
   protocol = "HTTP"
 
   default_action {
-    type = "forward"
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.ecs_streamlit.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = data.aws_acm_certificate.streamlit.arn
+
+  default_action {
+    type             = "forward"
     target_group_arn = aws_lb_target_group.ecs_streamlit.arn
   }
 }
